@@ -1,0 +1,23 @@
+---
+- name: Install Horizon package.
+  yum:
+    name:  openstack-dashboard
+    state: present
+
+- name:     Configure Horizon.
+  register: horizon_apache_config
+  template:
+    src:  local_settings.j2
+    dest: /etc/openstack-dashboard/local_settings
+
+- name: Restart Apache.
+  service:
+    name:  httpd.service
+    state: restarted
+  when: horizon_apache_config.changed
+
+- name: Restart Memcached.
+  service:
+    name:  memcached.service
+    state: restarted
+  when: horizon_apache_config.changed
