@@ -27,7 +27,7 @@ Example Playbook
 
     - hosts: servers
       roles:
-         - binarycode.openstack-horizon
+        - binarycode.openstack-horizon
 
 License
 -------
